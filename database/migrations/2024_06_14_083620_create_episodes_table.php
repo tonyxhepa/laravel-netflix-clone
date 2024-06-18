@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Serie::class);
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('overview')->nullable();

@@ -28,10 +28,16 @@ class GenreResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Section::make('Details')
+                    ->columns(4)
+                    ->schema([
                 TextInput::make('name')
                     ->live()
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                TextInput::make('slug')
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                        ->required()
+                        ->columnSpan(2),
+                TextInput::make('slug')->required()->columnSpan(2)
+            ])
             ]);
     }
 
@@ -58,7 +64,8 @@ class GenreResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\MoviesRelationManager::class,
+            RelationManagers\SeriesRelationManager::class
         ];
     }
 

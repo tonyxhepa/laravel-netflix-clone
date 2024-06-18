@@ -4,14 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\MoviesRelationManager;
+use App\Filament\Resources\CategoryResource\RelationManagers\SeriesRelationManager;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -26,7 +31,16 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Details')
+                    ->columns(4)
+                    ->schema([
+                        TextInput::make('name')
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                            ->required()
+                            ->columnSpan(2),
+                        TextInput::make('slug')->required()->columnSpan(2)
+                    ])
             ]);
     }
 
@@ -34,7 +48,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('slug'),
             ])
             ->filters([
                 //
@@ -52,7 +67,8 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MoviesRelationManager::class,
+            SeriesRelationManager::class,
         ];
     }
 
