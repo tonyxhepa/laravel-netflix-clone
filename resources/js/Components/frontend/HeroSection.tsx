@@ -1,3 +1,5 @@
+import { Link } from "@inertiajs/react";
+
 export default function HeroSection() {
     return (
         <div className="bg-[url('/images/netflix-bg.jpg')] bg-cover bg-center bg-no-repeat mb-2">
@@ -8,23 +10,23 @@ export default function HeroSection() {
                         aria-label="Global"
                     >
                         <div className="flex lg:flex-1">
-                            <a href="#" className="-m-1.5 p-1.5">
+                            <Link href="/" className="-m-1.5 p-1.5">
                                 <span className="sr-only">Netflix</span>
                                 <img
                                     className="h-8 w-auto"
                                     src="/images/netflix-logo.png"
                                     alt="Netflix"
                                 />
-                            </a>
+                            </Link>
                         </div>
                         <div className="hidden lg:flex lg:gap-x-12"></div>
                         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                            <a
-                                href="#"
+                            <Link
+                                href="/login"
                                 className="font-semibold leading-6 text-white bg-red-600 hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 rounded-md px-3.5 py-2.5 text-sm"
                             >
                                 Sign In <span aria-hidden="true">&rarr;</span>
-                            </a>
+                            </Link>
                         </div>
                     </nav>
                 </header>
@@ -54,13 +56,13 @@ export default function HeroSection() {
                                 aliqua.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-x-6">
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/register"
                                     className="rounded-md bg-red-600 px-3.5 py-2.5 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 text-2xl"
                                 >
                                     Get started
                                     <span aria-hidden="true">→</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

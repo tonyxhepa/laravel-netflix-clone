@@ -3,6 +3,8 @@ import { PageProps } from "@/types";
 import HeroSection from "@/Components/frontend/HeroSection";
 import RightImageSection from "@/Components/frontend/RightImageSection";
 import LeftImageSection from "@/Components/frontend/LeftImageSection";
+import Test from "@/Components/test";
+import Billboard from "@/Components/frontend/Billboard";
 
 export default function Welcome({ auth }: PageProps) {
     const header1 = "Enjoy on your TV.";
@@ -31,7 +33,8 @@ export default function Welcome({ auth }: PageProps) {
     return (
         <>
             <Head title="Welcome to Netflix" />
-            <HeroSection />
+            {/* <HeroSection /> */}
+            <Billboard />
             <RightImageSection
                 header={header1}
                 text={text1}

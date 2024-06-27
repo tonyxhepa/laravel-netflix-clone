@@ -1,29 +1,78 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import { useState, PropsWithChildren, ReactNode, useEffect } from "react";
+import Dropdown from "@/Components/Dropdown";
+import NavLink from "@/Components/NavLink";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { Link } from "@inertiajs/react";
+import { User } from "@/types";
+import Footer from "@/Components/frontend/Footer";
 
-export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+export default function Authenticated({
+    user,
+    children,
+}: PropsWithChildren<{ user: User }>) {
+    const [showingNavigationDropdown, setShowingNavigationDropdown] =
+        useState(false);
+    const [showBackground, setShowBackground] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY >= 80) {
+                setShowBackground(true);
+            } else {
+                setShowBackground(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+        <div className="min-h-screen bg-gray-900">
+            <nav
+                className={`border-b border-gray-100 dark:border-gray-700 fixed w-full z-20 top-0 start-0 transition duration-150 ${
+                    showBackground ? "bg-black bg-opacity-90" : "bg-transparent"
+                }`}
+            >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <img
+                                        className="h-8 w-auto"
+                                        src="/images/netflix-logo.png"
+                                        alt="Netflix"
+                                    />
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
+                                    Movies
+                                </NavLink>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
+                                    TV Shows
+                                </NavLink>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
+                                    My List
+                                </NavLink>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
+                                    Popular
                                 </NavLink>
                             </div>
                         </div>
@@ -56,8 +105,16 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        <Dropdown.Link
+                                            href={route("profile.edit")}
+                                        >
+                                            Profile
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route("logout")}
+                                            method="post"
+                                            as="button"
+                                        >
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -67,19 +124,36 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                                onClick={() =>
+                                    setShowingNavigationDropdown(
+                                        (previousState) => !previousState
+                                    )
+                                }
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <svg
+                                    className="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
                                     <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            !showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
                                         d="M4 6h16M4 12h16M4 18h16"
                                     />
                                     <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
@@ -91,9 +165,17 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
+                <div
+                    className={
+                        (showingNavigationDropdown ? "block" : "hidden") +
+                        " sm:hidden"
+                    }
+                >
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink
+                            href={route("dashboard")}
+                            active={route().current("dashboard")}
+                        >
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
@@ -103,12 +185,20 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             <div className="font-medium text-base text-gray-800 dark:text-gray-200">
                                 {user.name}
                             </div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                            <div className="font-medium text-sm text-gray-500">
+                                {user.email}
+                            </div>
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                            <ResponsiveNavLink href={route("profile.edit")}>
+                                Profile
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                method="post"
+                                href={route("logout")}
+                                as="button"
+                            >
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
@@ -116,13 +206,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                 </div>
             </nav>
 
-            {header && (
-                <header className="bg-white dark:bg-gray-800 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-
-            <main>{children}</main>
+            <main className="min-h-screen mt-12">{children}</main>
+            <Footer />
         </div>
     );
 }
