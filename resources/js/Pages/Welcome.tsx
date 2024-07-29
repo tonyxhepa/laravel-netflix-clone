@@ -1,12 +1,18 @@
 import { Link, Head } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { Movie, PageProps, Series } from "@/types";
 import HeroSection from "@/Components/frontend/HeroSection";
 import RightImageSection from "@/Components/frontend/RightImageSection";
 import LeftImageSection from "@/Components/frontend/LeftImageSection";
 import Test from "@/Components/test";
 import Billboard from "@/Components/frontend/Billboard";
+import MovieList from "@/Components/frontend/MovieList";
 
-export default function Welcome({ auth }: PageProps) {
+interface WelcomeProps {
+    movies: Movie[];
+    series: Series[];
+}
+
+export default function Welcome({ movies, series }: WelcomeProps) {
     const header1 = "Enjoy on your TV.";
     const text1 =
         "Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.";
@@ -35,6 +41,7 @@ export default function Welcome({ auth }: PageProps) {
             <Head title="Welcome to Netflix" />
             {/* <HeroSection /> */}
             <Billboard />
+            <MovieList title="Latest Movies" movies={movies} />
             <RightImageSection
                 header={header1}
                 text={text1}

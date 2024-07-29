@@ -1,16 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Resources\MovieResource;
+use App\Http\Resources\SerieResource;
+use App\Models\Movie;
+use App\Models\Serie;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'movies' => MovieResource::collection(Movie::all()),
+        'series' => SerieResource::collection(Serie::all()),
     ]);
 });
 
